@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Product from './pages/product'
 import ProfilePage from './pages/ProfilePage'
+import ProductDetails from './pages/ProductDetails'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Product />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/profile" element={<ProfilePage />} />
 
         </Routes>
