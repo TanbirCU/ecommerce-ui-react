@@ -1,8 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { products } from '../data/products';
+import { useCart } from '../context/CartContext';
 
 function ProductDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
   const product = products.find(p => p.id === parseInt(id));
 
   if (!product) {
@@ -29,10 +32,19 @@ function ProductDetails() {
             <p className="text-slate-400 leading-relaxed">{product.description}</p>
           </div>
           <div className="flex gap-4">
-            <button className="flex-1 bg-sky-500 hover:bg-sky-400 text-white font-semibold py-3 px-6 rounded-full transition">
+            <button
+              onClick={() => addToCart(product)}
+              className="flex-1 bg-sky-500 hover:bg-sky-400 text-white font-semibold py-3 px-6 rounded-full transition"
+            >
               Add to Cart
             </button>
-            <button className="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-6 rounded-full transition">
+            <button
+              onClick={() => {
+                addToCart(product);
+                navigate('/cart');
+              }}
+              className="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-6 rounded-full transition"
+            >
               Buy Now
             </button>
           </div>

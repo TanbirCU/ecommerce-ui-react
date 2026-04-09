@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { totalItems } = useCart();
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur-sm">
@@ -34,10 +36,17 @@ function Navbar() {
 
         <div className="hidden items-center gap-3 md:flex">
           <Link
-            to="/products"
-            className="rounded-full bg-sky-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:bg-sky-400"
+            to="/cart"
+            className="relative rounded-full bg-slate-800 p-3 text-slate-300 transition hover:bg-slate-700 hover:text-white"
           >
-            Start Shopping
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5H19M7 13v8a2 2 0 002 2h10a2 2 0 002-2v-3" />
+            </svg>
+            {totalItems > 0 && (
+              <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-sky-500 text-xs font-bold text-white">
+                {totalItems}
+              </span>
+            )}
           </Link>
         </div>
 
@@ -68,8 +77,13 @@ function Navbar() {
               </Link>
             </li>
             <li>
-              <Link to="/cart" className="block rounded-2xl px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-slate-900">
-                Cart
+              <Link to="/cart" className="flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-slate-900">
+                <span>Cart</span>
+                {totalItems > 0 && (
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-sky-500 text-xs font-bold text-white">
+                    {totalItems}
+                  </span>
+                )}
               </Link>
             </li>
             <li>
